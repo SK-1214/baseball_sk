@@ -13,14 +13,38 @@ public:
 	explicit Baseball(const string &question) : question(question) {}
 
 	GuessResult guess(const string& guessNumber) {
+		
 		assertIllegalArgument(guessNumber);
 
+		GuessResult	result{ false,0,0 };
+
+		int strike_count = 0;
+		
+		
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (guessNumber[i] == question[j]) {
+					strike_count++;
+				}
+			}
+		}
+
+		if (strike_count == 3) result.solved = true;
+
+		result.strike = strike_count;
+		result.ball = 3 - strike_count;
+		return result;
+		/*
+		for (char ch : guessNumber) {
+
+		}
 		if (guessNumber == question) {
 			
 			return { true, 3, 0 };
 		}
 
 		return { false, 0, 0 };
+		*/
 	}
 
 	void assertIllegalArgument(const std::string& guessNumber)
